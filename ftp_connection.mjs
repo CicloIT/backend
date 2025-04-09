@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 const oAuth2Client = new OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
-  'https://lidercom-7yuo.onrender.com/authentication'
+  'https://backend-nu-ten-57.vercel.app/authentication'
 );
 
 async function refreshAccessToken(refreshToken) {
@@ -120,6 +120,7 @@ app.get('/auth', (req, res) => {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: ['https://www.googleapis.com/auth/drive'],
+    redirect_uri: 'https://backend-nu-ten-57.vercel.app/authentication'
   });
   res.redirect(authUrl);  // Redirige al usuario a la página de autorización de Google
 });
