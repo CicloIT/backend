@@ -86,16 +86,13 @@ app.get('/authentication', async (req, res) => {
   const code = req.query.code;
   try {
     const { tokens } = await oAuth2Client.getToken(code);
-    oAuth2Client.setCredentials(tokens);
-    console.log('Tokens en authentication:', tokens);
-    console.log("Entro aca");
+    oAuth2Client.setCredentials(tokens);   
     res.cookie('auth_token', JSON.stringify(tokens), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'none', // Change this to 'none'
       path: '/'
     });
-    console.log('Tokens en cookie:', req.cookies.auth_token);
     // Redirect to your frontend
     res.redirect('https://lidercom.net.ar/ftp');
   } catch (error) {
@@ -105,7 +102,6 @@ app.get('/authentication', async (req, res) => {
 });
 
 app.get('/checkAuth', (req, res) => {
-  console.log('Tokens en cookie:', req.cookies.auth_token);
   const token = req.cookies.auth_token;
   if (token) {
     res.status(200).send('Authenticated');
